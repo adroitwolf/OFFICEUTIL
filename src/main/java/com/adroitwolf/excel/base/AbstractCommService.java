@@ -1,8 +1,9 @@
-package com.adroitwolf.excel;
+package com.adroitwolf.excel.base;
 
 import com.adroitwolf.anno.Excel;
 import com.adroitwolf.entity.CellStyleEntity;
 import com.adroitwolf.entity.ExcelInfo;
+import com.adroitwolf.entity.ExportEntity;
 import com.adroitwolf.entity.RowStyle;
 import com.adroitwolf.enums.ExcelWorkEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 /**
  * <pre>ExcelCommonService</pre>
@@ -24,7 +26,7 @@ import java.io.FileOutputStream;
  */
 @Slf4j
 @Component
-public class ExcelCommonService {
+public abstract class AbstractCommService {
 
     public Workbook getWorkBook( ExcelInfo info){
         ExcelWorkEnum type;
@@ -36,6 +38,7 @@ public class ExcelCommonService {
             return null;
         }
     }
+
     private Workbook getWorkbookByType(ExcelWorkEnum type){
         switch (type){
             case HSSF:
@@ -48,6 +51,7 @@ public class ExcelCommonService {
         }
 
     }
+
     public  ExcelInfo builderInfoByAnno(Class<?> sourceClass){
         if(!sourceClass.isAnnotationPresent(Excel.class)){
             log.error("必要表格数据丢失，请核查后重试");
@@ -91,6 +95,8 @@ public class ExcelCommonService {
         row.setHeight(rowStyle.getHeight());
         return row;
     }
+
+    public abstract  List<ExportEntity> builderExportEntity(Class<?> sourceClass);
 
 //    public Cell setCellStyle(Cell cell, CellStyleEntity cellStyleEntity){
 //

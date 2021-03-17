@@ -20,16 +20,19 @@ public @interface ExcelEntity {
      */
     public int width() default  5;
 
-
     /**
      * 该单元格的数据类型,默认为文本
      */
     public ExcelDataEnum type() default ExcelDataEnum.WORD;
 
-
     /**
      * 所属表头名字，没有默认为属性名
      */
     public String name() default  "";
+
+    /**
+     * 是否需要和并内容相同的横向单元格
+     */
+    public boolean mergeVertical() default false;
 
 }

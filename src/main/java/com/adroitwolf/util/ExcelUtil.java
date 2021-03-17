@@ -1,12 +1,10 @@
 package com.adroitwolf.util;
 
 import com.adroitwolf.entity.ExcelInfo;
-import com.adroitwolf.excel.ExcelCommonService;
 import com.adroitwolf.excel.ExcelExportService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import java.io.File;
 import java.util.Collection;
 
 /**
@@ -20,7 +18,6 @@ public class ExcelUtil {
     private ExcelUtil() {
     }
 
-    private static final ExcelCommonService commonService = new ExcelCommonService();
     private static final ExcelExportService exportService = new ExcelExportService();
 
 
@@ -29,9 +26,9 @@ public class ExcelUtil {
      * @param info 这个可以为null
      */
     public static Workbook exportExcel(Collection<?> list, Class<?> sourceClass, ExcelInfo info,Workbook workbook){
-        info = info == null ? commonService.builderInfoByAnno(sourceClass) : info ;
+        info = info == null ? exportService.builderInfoByAnno(sourceClass) : info ;
 
-        workbook = workbook == null? commonService.getWorkBook(info): workbook;
+        workbook = workbook == null? exportService.getWorkBook(info): workbook;
         // 获取表头注解
         if(workbook == null){  //有错误发生
             log.error("没有合适的工作表");
@@ -45,7 +42,7 @@ public class ExcelUtil {
 
     public static void export2File(String path,Workbook workbook){
         // 创建文件
-        commonService.export2File(path,workbook);
+        exportService.export2File(path,workbook);
 
     }
 

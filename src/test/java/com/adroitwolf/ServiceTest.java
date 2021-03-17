@@ -9,7 +9,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,14 +25,22 @@ public class ServiceTest {
     @Test
     public void createExcel(){
         List<Worker> workerList = new ArrayList<>();
-        for(int i=0;i<10;i++){
-            workerList.add(new Worker(1,"张三",8,"青岛"));
-        }
+
+        workerList.add(new Worker(1,"张三",8,"青岛"));
+        workerList.add(new Worker(2,"李四",8,"青岛"));
+        workerList.add(new Worker(3,"张三",8,"青岛"));
+        workerList.add(new Worker(4,"李四",8,"青岛"));
+        workerList.add(new Worker(5,"李四",8,"德州"));
+        workerList.add(new Worker(6,"张三",8,"德州"));
+        workerList.add(new Worker(7,"张三",8,"德州"));
+        workerList.add(new Worker(8,"李四",8,"德州"));
+        workerList.add(new Worker(9,"张三",8,"德州"));
+        workerList.add(new Worker(10,"张三",8,"德州"));
+
         System.out.println(workerList.size());
         Workbook workbook = ExcelUtil.exportExcel(workerList, Worker.class, null, null);
 
 
-
-        ExcelUtil.export2File("d://code/诺亚公司"+ File.separator+ ExcelWorkEnum.SXSSF.toString(),workbook);
+        ExcelUtil.export2File("d://code/诺亚公司"+  ExcelWorkEnum.SXSSF.getSuffix(),workbook);
     }
 }

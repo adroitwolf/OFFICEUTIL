@@ -21,4 +21,6 @@ public class ExcelInfo {
     private RowStyle rowStyle;
 
     private String path;
+
+    private int size;  //一共多少行
 }

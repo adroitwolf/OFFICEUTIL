@@ -25,10 +25,12 @@ public class ExportEntity {
 
     private String name;
 
-
-
     private CellStyleEntity cellStyleEntity;
 
     private ExcelDataEnum type;
+
+    private boolean mergeVertical;
+
+    private int startNum = -1;
 
 }

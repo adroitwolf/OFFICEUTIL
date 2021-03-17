@@ -20,12 +20,12 @@ public class Worker {
     @ExcelEntity(type = ExcelDataEnum.NUM,name = "编号")
     private Integer id;
 
-    @ExcelEntity
+    @ExcelEntity(mergeVertical = true)
     private String name;
 
     @ExcelEntity(type = ExcelDataEnum.NUM)
     private Integer age;
 
-
+    @ExcelEntity(name="地址",mergeVertical = true)
     private String address;
 }
