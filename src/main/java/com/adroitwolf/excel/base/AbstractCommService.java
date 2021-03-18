@@ -1,7 +1,6 @@
 package com.adroitwolf.excel.base;
 
 import com.adroitwolf.anno.Excel;
-import com.adroitwolf.entity.CellStyleEntity;
 import com.adroitwolf.entity.ExcelInfo;
 import com.adroitwolf.entity.ExportEntity;
 import com.adroitwolf.entity.RowStyle;
@@ -10,7 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Component;
@@ -60,19 +61,25 @@ public abstract class AbstractCommService {
         Excel excel = sourceClass.getAnnotation(Excel.class);
 
         ExcelInfo info = new ExcelInfo();
+
         info.setSheetName(excel.sheetName());
 
         info.setType(excel.type());
 
-//        info.setTableName(new StringBuilder()
-//                .append(excel.name())
-//                .append(excel.type().getSuffix())
-//                .toString());
+
+
         info.setHideTableHeader(excel.isHideTableFiled());
+
+        info.setStartRow(excel.rowNum() ); // excel从0开始，但是用户喜欢从1开始，后面需要规定好
+
+        info.setHeaderHeight(excel.rowHeight());
+
+        info.setDataRowHeight(excel.dataRowHeight());
 
         info.setPath(excel.path());
 
         RowStyle style = new RowStyle();
+
         style.setHeight((short) (excel.height()  * 2048 / 8.43F));
 
         info.setRowStyle(style);
@@ -91,14 +98,40 @@ public abstract class AbstractCommService {
         }
     }
 
-    public Row setRowStyle(Row row, RowStyle rowStyle){
-        row.setHeight(rowStyle.getHeight());
-        return row;
+    public void setRowStyle(Row row, RowStyle rowStyle){
+        if(rowStyle != null){
+            row.setHeight(rowStyle.getHeight());
+        }
     }
 
     public abstract  List<ExportEntity> builderExportEntity(Class<?> sourceClass);
 
-//    public Cell setCellStyle(Cell cell, CellStyleEntity cellStyleEntity){
-//
-//    }
+
+
+    /**
+     *  设定单元值
+     */
+    public  void setCellValue(int startRow, int endRow, int startCol, int endCol, Sheet sheet, Object t, RowStyle rowStyle){
+        Row row = sheet.getRow(startRow) == null ? sheet.createRow(startRow) : sheet.getRow(startRow);
+        for(int i = startRow;i<=endRow;i++){
+            Row styleRow = sheet.getRow(i) == null ? sheet.createRow(i) : sheet.getRow(i);
+            setRowStyle(styleRow,rowStyle);
+        }
+
+        if(startRow != endRow || startCol != endCol){ //说明这是一个需要合并的单元
+
+            CellRangeAddress rangeAddress = new CellRangeAddress(startRow, endRow,
+                    startCol,
+                    endCol);
+
+            sheet.validateMergedRegions();
+
+            sheet.addMergedRegion(rangeAddress);
+        }
+
+        Cell cell = row.getCell(startCol) == null ? row.createCell(startCol): row.getCell(startCol);
+
+        cell.setCellValue(String.valueOf(t));
+    }
+
 }

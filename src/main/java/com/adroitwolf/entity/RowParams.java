@@ -10,5 +10,6 @@ import lombok.Data;
 @Data
 public class RowParams {
     private Integer rowId; // 列行号
+    private Integer rowHeight;
     private RowStyle rowStyle;
 }

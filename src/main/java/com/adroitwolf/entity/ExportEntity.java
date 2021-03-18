@@ -3,8 +3,6 @@ package com.adroitwolf.entity;
 import com.adroitwolf.enums.ExcelDataEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
@@ -16,9 +14,15 @@ import java.lang.reflect.Method;
 @NoArgsConstructor
 public class ExportEntity {
 
-    private int index;
+    private int index; // 最开始的列索引
 
-    private Field field;
+    private int endNum; //最终的列索引
+
+    private int colNum; // 占多少列
+
+    private int startRowNum = -1;
+
+    private Object beforeValue;
 
     // 字段的get方法
     private Method getMethod;
@@ -31,6 +35,5 @@ public class ExportEntity {
 
     private boolean mergeVertical;
 
-    private int startNum = -1;
 
 }

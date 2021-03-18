@@ -12,7 +12,7 @@ import lombok.Data;
  *
  * @author adroitwolf 2021年03月16日 10:28
  */
-@Excel(height = 6,type = ExcelWorkEnum.XSSF,sheetName = "员工",path = "d://code",isHideTableFiled = false)
+@Excel(height = 6,type = ExcelWorkEnum.XSSF,sheetName = "员工",path = "d://code",rowHeight = 2,rowNum = 2)
 @Data
 @AllArgsConstructor
 public class Worker {
@@ -20,7 +20,7 @@ public class Worker {
     @ExcelEntity(type = ExcelDataEnum.NUM,name = "编号")
     private Integer id;
 
-    @ExcelEntity(mergeVertical = true)
+    @ExcelEntity(mergeVertical = true,cellWidth = 2)
     private String name;
 
     @ExcelEntity(type = ExcelDataEnum.NUM)

@@ -2,7 +2,6 @@ package com.adroitwolf.anno;
 
 import com.adroitwolf.enums.ExcelWorkEnum;
 import com.sun.istack.internal.NotNull;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -21,13 +20,15 @@ public @interface Excel {
      */
     public boolean isHideTableFiled() default false;
 
+    public int rowHeight() default 1; //表头默认占多高
+
+    public int rowNum() default 1; // 表头起始行号
 
     /**
      * 文件存储的路径
      */
     @NotNull
     public String path() ;
-
 
     @NotNull
     public ExcelWorkEnum type();
@@ -41,4 +42,8 @@ public @interface Excel {
     @NotNull
     public String sheetName();
 
+    /**
+     *  数据占多高
+     */
+    public int dataRowHeight() default  1;
 }

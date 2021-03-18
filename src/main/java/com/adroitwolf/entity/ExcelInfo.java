@@ -10,6 +10,24 @@ import lombok.Data;
  */
 @Data
 public class ExcelInfo {
+
+    public ExcelInfo() {
+
+    }
+
+    public ExcelInfo(String tableName, ExcelWorkEnum type, String sheetName, boolean isHideTableHeader, RowStyle rowStyle, String path, Integer headerHeight,Integer dataRowHeight, Integer startRow) {
+        this.tableName = tableName;
+        this.type = type;
+        this.sheetName = sheetName;
+        this.isHideTableHeader = isHideTableHeader;
+        this.rowStyle = rowStyle;
+        this.path = path;
+        this.headerHeight = headerHeight;
+        this.startRow = startRow;
+        this.dataRowHeight = dataRowHeight;
+    }
+
+
     private String tableName;
 
     private ExcelWorkEnum type;
@@ -22,5 +40,11 @@ public class ExcelInfo {
 
     private String path;
 
-    private int size;  //一共多少行
+    private Integer headerHeight;
+
+    private Integer dataRowHeight;
+
+    private Integer startRow; // 起始行号
+
+    private int size;  //一共多少个数据
 }

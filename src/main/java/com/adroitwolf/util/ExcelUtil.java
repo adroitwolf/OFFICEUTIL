@@ -27,7 +27,7 @@ public class ExcelUtil {
      */
     public static Workbook exportExcel(Collection<?> list, Class<?> sourceClass, ExcelInfo info,Workbook workbook){
         info = info == null ? exportService.builderInfoByAnno(sourceClass) : info ;
-
+        info.setSize(list.size());
         workbook = workbook == null? exportService.getWorkBook(info): workbook;
         // 获取表头注解
         if(workbook == null){  //有错误发生

@@ -31,8 +31,14 @@ public @interface ExcelEntity {
     public String name() default  "";
 
     /**
-     * 是否需要和并内容相同的横向单元格
+     * 是否需要和并内容相同的横向单元格 ->  软合并
+     * 这里优先级是 软合并 > 硬合并
      */
     public boolean mergeVertical() default false;
+
+    /**
+     * 单元格横向宽度 -> 硬合并
+     */
+    public int cellWidth() default  1;
 
 }
